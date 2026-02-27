@@ -22,8 +22,8 @@ public class GreetingResource {
 
     @POST
     @Produces(MediaType.TEXT_PLAIN)
-    public List<Produtos> hello() {
-        return produtoService.getProdutos();
+    public String hello() {
+        return produtoService.getProdutos().getFirst().getEmail();
     }
 
 }
