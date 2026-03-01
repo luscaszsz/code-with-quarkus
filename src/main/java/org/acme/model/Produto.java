@@ -1,6 +1,5 @@
 package org.acme.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
@@ -29,9 +28,9 @@ import java.util.List;
  * }
  */
 @Entity
-@Table(name = "produtos")
+@Table(name = "produto")
 @ApplicationScoped
-public class Produtos extends PanacheEntityBase {
+public class Produto extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,11 +68,11 @@ public class Produtos extends PanacheEntityBase {
 
     @Transactional
     public void criaValor(String valor){
-        Produtos.persist(valor);
+        Produto.persist(valor);
     }
 
-    public List<Produtos> buscaNomesProdutos(){
-        return Produtos.listAll();
+    public List<Produto> buscaNomesProdutos(){
+        return Produto.listAll();
     }
 
 }
