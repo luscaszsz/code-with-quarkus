@@ -4,7 +4,10 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -30,6 +33,8 @@ import java.util.List;
 @Entity
 @Table(name = "produto")
 @ApplicationScoped
+@Getter
+@Setter
 public class Produto extends PanacheEntityBase {
 
     @Id
@@ -37,34 +42,29 @@ public class Produto extends PanacheEntityBase {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String nome;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+    @Column(nullable = false)
+    private String tipoProduto;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(nullable = false)
+    private BigDecimal rentabilidadeAnual;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(nullable = false)
+    private String risco;
 
-    public String getEmail() {
-        return email;
-    }
+    @Column(nullable = false) //consideracao - poderia ser int, mas caso o banco de dados mude no futuro para aceitar valores nulos, o codigo nao precisa ser adaptado
+    private Integer prazoMinMeses;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    @Column(nullable = false)
+    private Integer prazoMaxMeses;
 
-    public String getName() {
-        return name;
-    }
+    @Column(precision = 15, scale = 2, nullable = false)
+    private BigDecimal valorMin;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @Column(precision = 15, scale = 2, nullable = false)
+    private BigDecimal valorMax;
+
 
     @Transactional
     public void criaValor(String valor){
@@ -73,6 +73,13 @@ public class Produto extends PanacheEntityBase {
 
     public List<Produto> buscaNomesProdutos(){
         return Produto.listAll();
+    }
+
+    public List<Produto> findByTipoAndValorAndPrazo(String tipoProduto, BigDecimal valor, int prazo){
+        return find("tipoProduto = ?1 " +
+                "and ?2 between valorMin and valorMax " +
+                "and ?3 between prazoMinMeses and prazoMaxMeses",
+                tipoProduto, valor, prazo).list();
     }
 
 }
