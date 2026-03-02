@@ -7,8 +7,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.acme.dto.Simulacao;
-import org.acme.dto.SimulacaoResponse;
+import org.acme.dto.request.Simulacao;
+import org.acme.dto.response.SimulacaoResponse;
 import org.acme.service.ProdutoService;
 import org.jboss.logging.Logger;
 
@@ -33,7 +33,7 @@ public class GreetingResource {
 
         LOG.info("DTO RECEBIDO: " + simulacao);
 
-        if (simulacaoResponse.getContagemProdutos() == 0)
+        if (simulacaoResponse == null)
             return Response.status(422).entity("Não há produtos compatíveis com a simulação").build();
         return Response.ok(simulacaoResponse).build();
 
