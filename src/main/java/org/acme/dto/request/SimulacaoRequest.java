@@ -14,10 +14,10 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @ToString
-public class Simulacao {
+public class SimulacaoRequest {
 
     @NotNull(message = "ID do cliente é obrigatório!")
-    private int clienteId;
+    private Integer clienteId;
 
     @NotNull(message = "Valor de aporte é obrigatório!")
     @Positive(message = "Valor de aporte deve ser maior que zero!")

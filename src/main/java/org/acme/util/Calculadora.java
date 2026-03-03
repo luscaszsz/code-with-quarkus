@@ -10,6 +10,6 @@ public class Calculadora {
 
         BigDecimal taxaMensal = rentabilidade.divide(BigDecimal.valueOf(12), 10, RoundingMode.HALF_UP);
 
-        return valor.multiply(BigDecimal.ONE.add(taxaMensal)).pow(prazo);
+        return valor.multiply(BigDecimal.ONE.add(taxaMensal).pow(prazo)).setScale(2, RoundingMode.HALF_UP);
     }
 }

@@ -16,8 +16,11 @@ public class SimulacaoResponse {
 
     private final List<Analise> simulacoes;
 
-    public SimulacaoResponse(List<Analise> simulacoes) {
+    private final String dataSimulacao;
+
+    public SimulacaoResponse(List<Analise> simulacoes, String dataSimulacao) {
         this.contagemSimulacoes = simulacoes.size();
         this.simulacoes = simulacoes.isEmpty() ? null : simulacoes;
+        this.dataSimulacao = dataSimulacao;
     }
 }
