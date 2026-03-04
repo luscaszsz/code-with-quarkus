@@ -64,7 +64,7 @@ public class Produto extends PanacheEntityBase {
     @Column(precision = 15, scale = 2, nullable = false)
     private BigDecimal valorMax;
 
-    public static List<Produto> buscaNomesProdutos(){
+    public static List<Produto> findProdutosDisponiveis(){
         return Produto.listAll();
     }
 

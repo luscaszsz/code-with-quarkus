@@ -19,7 +19,7 @@ import java.util.List;
 public class ProdutoService {
 
     public List<Produto> getProdutos(){
-        return Produto.buscaNomesProdutos();
+        return Produto.findProdutosDisponiveis();
     }
 
     public SimulacaoResponse getProdutoCompativel(SimulacaoRequest simulacaoRequest) {

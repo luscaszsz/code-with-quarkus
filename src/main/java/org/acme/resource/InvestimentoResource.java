@@ -1,6 +1,9 @@
 package org.acme.resource;
 
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -10,6 +13,7 @@ import org.acme.dto.response.SimulacaoResponse;
 import org.acme.model.Simulacao;
 import org.acme.service.ProdutoService;
 import org.acme.service.SimulacaoService;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
 
 import java.util.List;
@@ -17,6 +21,9 @@ import java.util.List;
 @Path("/investimento")
 @ApplicationScoped
 public class InvestimentoResource {
+
+    @Inject
+    JsonWebToken jwt;
 
     private static final Logger LOG = Logger.getLogger(InvestimentoResource.class);
 
@@ -30,6 +37,7 @@ public class InvestimentoResource {
 
     @POST
     @Path("/simulacoes")
+    @PermitAll
     @Produces(MediaType.APPLICATION_JSON)
     public Response geraSimulacao(@Valid SimulacaoRequest simulacao) {
 
@@ -46,6 +54,7 @@ public class InvestimentoResource {
 
     @GET
     @Path("/simulacoes")
+    @RolesAllowed({ "User", "Admin" })
     @Produces(MediaType.APPLICATION_JSON)
     public Response buscaSimulacoes(@QueryParam("clienteId") Integer clienteId) {
 
