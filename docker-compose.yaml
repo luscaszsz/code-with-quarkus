@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+
+  investimento-jwt:
+    build:
+      context: ./investimento-jwt
+    container_name: investimento-jwt
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./jwt:/jwt
+
+  investimento-app:
+    build:
+      context: ./investimento-app
+    container_name: investimento-app
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./jwt:/jwt
+    depends_on:
+      - investimento-jwt
