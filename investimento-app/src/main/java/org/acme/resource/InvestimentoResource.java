@@ -54,7 +54,7 @@ public class InvestimentoResource {
 
     @GET
     @Path("/simulacoes")
-    @RolesAllowed({ "User", "Admin" })
+    @RolesAllowed({ "Admin" })
     @Produces(MediaType.APPLICATION_JSON)
     public Response buscaSimulacoes(@QueryParam("clienteId") Integer clienteId) {
 

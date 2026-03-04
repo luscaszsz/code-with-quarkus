@@ -32,9 +32,8 @@ import java.util.List;
 @Table(name = "simulacao")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)   //minimo para o JPA segundo doc
+@NoArgsConstructor   //minimo para o JPA segundo doc
 @AllArgsConstructor(access = AccessLevel.PROTECTED)  //para o builder
-@Builder
 public class Simulacao extends PanacheEntityBase {
 
     @Id

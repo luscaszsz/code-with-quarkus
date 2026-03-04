@@ -88,14 +88,13 @@ class InvestimentoResourceTest {
     void deveRetornarSimulacoesQuandoExistirem() {
 
         // Arrange
-        Simulacao simulacao = Simulacao.builder()
-                .dataSimulacao(Instant.now().toString())
-                .prazoMeses(12)
-                .valorFinal(BigDecimal.valueOf(1500))
-                .clienteId(1)
-                .tipoProduto("CDB")
-                .rentabilidadeAplicada(BigDecimal.valueOf(0.12)).build()
-                ;
+        Simulacao simulacao = new Simulacao();
+        simulacao.setDataSimulacao(Instant.now().toString());
+        simulacao.setPrazoMeses(12);
+        simulacao.setValorFinal(BigDecimal.valueOf(1500));
+        simulacao.setClienteId(1);
+        simulacao.setTipoProduto("CDB");
+        simulacao.setRentabilidadeAplicada(BigDecimal.valueOf(0.12));
 
         Mockito.when(simulacaoService.retornaSimulacaoPorClientId(1))
                 .thenReturn(List.of(simulacao));
