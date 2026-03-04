@@ -10,10 +10,10 @@ import jakarta.ws.rs.core.Response;
 
 @Path("/jwt")
 @ApplicationScoped
-public class AmazonJwtResource {
+public class InvestimentoJwtResource {
 
     @Inject
-    AmazonJwtService service;
+    InvestimentoJwtService service;
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
