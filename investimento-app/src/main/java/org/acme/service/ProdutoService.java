@@ -9,6 +9,7 @@ import org.acme.dto.response.SimulacaoResponse;
 import org.acme.model.Produto;
 import org.acme.model.Simulacao;
 import org.acme.util.Calculadora;
+import org.jboss.logging.Logger;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -17,6 +18,8 @@ import java.util.List;
 
 @ApplicationScoped
 public class ProdutoService {
+
+    private static final Logger LOG = Logger.getLogger(ProdutoService.class);
 
     public List<Produto> getProdutos(){
         return Produto.findProdutosDisponiveis();
@@ -30,8 +33,10 @@ public class ProdutoService {
 
         List<Produto> produtosCompativeis = Produto.findByTipoAndValorAndPrazo(tipoProduto, valor, prazoMeses);
 
-        if(produtosCompativeis.isEmpty())
+        if(produtosCompativeis.isEmpty()){
+            LOG.info("Nenhum produto compativel com a simulacao\n" + simulacaoRequest);
             return null;
+        }
 
         List<Analise> analises = new ArrayList<>();
 
@@ -43,10 +48,10 @@ public class ProdutoService {
                     prazoMeses
             );
 
-            Log.info("rendimento "+ rendimento);
-            Log.info("valor " + valor);
-            Log.info("rentabilidade " + p.getRentabilidadeAnual());
-            Log.info("prazo " + prazoMeses);
+            LOG.info("rendimento "+ rendimento);
+            LOG.info("valor " + valor);
+            LOG.info("rentabilidade " + p.getRentabilidadeAnual());
+            LOG.info("prazo " + prazoMeses);
 
             ResultadoSimulacao resultadoSimulacao = new ResultadoSimulacao(rendimento, prazoMeses);
             analises.add(new Analise(p, resultadoSimulacao));

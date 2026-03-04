@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.dto.request.SimulacaoRequest;
 import org.acme.dto.response.SimulacaoResponse;
+import org.acme.exception.NegocialException;
 import org.acme.model.Simulacao;
 import org.acme.service.ProdutoService;
 import org.acme.service.SimulacaoService;
@@ -58,10 +59,12 @@ public class InvestimentoResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response buscaSimulacoes(@QueryParam("clienteId") Integer clienteId) {
 
+        LOG.info("CLIENTE ID RECEBIDO: " + clienteId);
+
         List<Simulacao> simulacoes = simulacaoService.retornaSimulacaoPorClientId(clienteId);
 
         if (simulacoes.isEmpty())
-            return Response.status(422).entity("Não há simulações realizadas para o ID indicado").build();
+            throw new NegocialException("Não há simulações realizadas para o ID indicado");
 
         return Response.ok().entity(simulacoes).build();
 
