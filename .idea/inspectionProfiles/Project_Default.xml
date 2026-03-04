@@ -10,6 +10,8 @@
           <option value="camel.*" />
           <option value="quarkus.datasource.*" />
           <option value="quarkus.container-image.*" />
+          <option value="quarkus.package.*" />
+          <option value="smallrye.*" />
         </list>
       </option>
     </inspection_tool>

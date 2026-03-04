@@ -2,7 +2,7 @@ package org.gs;
 
 import io.smallrye.jwt.build.Jwt;
 
-import javax.inject.Singleton;
+import jakarta.inject.Singleton;
 
 @Singleton
 public class AmazonJwtService {

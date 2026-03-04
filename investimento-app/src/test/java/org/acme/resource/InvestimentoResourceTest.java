@@ -2,6 +2,7 @@ package org.acme.resource;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.InjectMock;
+import io.quarkus.test.security.TestSecurity;
 import org.acme.dto.Analise;
 import org.acme.dto.ResultadoSimulacao;
 import org.acme.dto.request.SimulacaoRequest;
@@ -83,6 +84,7 @@ class InvestimentoResourceTest {
     // =========================
 
     @Test
+    @TestSecurity(user = "testUser", roles = {"User","Admin"})
     void deveRetornarSimulacoesQuandoExistirem() {
 
         // Arrange
@@ -107,6 +109,7 @@ class InvestimentoResourceTest {
     }
 
     @Test
+    @TestSecurity(user = "testUser", roles = {"User","Admin"})
     void deveRetornar422QuandoNaoExistiremSimulacoes() {
 
         // Arrange

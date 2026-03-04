@@ -52,24 +52,7 @@
       <artifactId>quarkus-smallrye-openapi</artifactId>
     </dependency>
 
-    <!-- BANCO DE DADOS -->
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-flyway</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-orm-panache</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkiverse.jdbc</groupId>
-      <artifactId>quarkus-jdbc-sqlite</artifactId>
-      <version>3.0.11</version>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-orm</artifactId>
-    </dependency>
+
 
 
     <!-- DTOS -->
@@ -100,11 +83,7 @@
       <artifactId>quarkus-junit5-mockito</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-jacoco</artifactId>
-      <scope>test</scope>
-    </dependency>
+
 
     <!-- TESTES  -->
     <dependency>
@@ -148,9 +127,9 @@
           <argLine>@{argLine}</argLine>
           <systemPropertyVariables>
             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-            <quarkus.jacoco.data-file>${maven.multiModuleProjectDirectory}/target/jacoco.exec</quarkus.jacoco.data-file>
-            <quarkus.jacoco.reuse-data-file>true</quarkus.jacoco.reuse-data-file>
-            <quarkus.jacoco.report-location>${maven.multiModuleProjectDirectory}/target/coverage</quarkus.jacoco.report-location>
+<!--            <quarkus.jacoco.data-file>${maven.multiModuleProjectDirectory}/target/jacoco.exec</quarkus.jacoco.data-file>-->
+<!--            <quarkus.jacoco.reuse-data-file>true</quarkus.jacoco.reuse-data-file>-->
+<!--            <quarkus.jacoco.report-location>${maven.multiModuleProjectDirectory}/target/coverage</quarkus.jacoco.report-location>-->
             <maven.home>${maven.home}</maven.home>
           </systemPropertyVariables>
         </configuration>
