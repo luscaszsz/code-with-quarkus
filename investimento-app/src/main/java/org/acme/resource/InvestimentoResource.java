@@ -9,8 +9,11 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.acme.dto.request.SimulacaoRequest;
+import org.acme.dto.response.ErroResponse;
 import org.acme.dto.response.SimulacaoResponse;
 import org.acme.exception.NegocialException;
+import org.acme.exception.mapper.GlobalExceptionMapper;
+import org.acme.model.Produto;
 import org.acme.model.Simulacao;
 import org.acme.service.ProdutoService;
 import org.acme.service.SimulacaoService;
@@ -34,6 +37,18 @@ public class InvestimentoResource {
     public InvestimentoResource(ProdutoService produtoService, SimulacaoService simulacaoService) {
         this.produtoService = produtoService;
         this.simulacaoService = simulacaoService;
+    }
+
+    @GET
+    @Path("/produtos")
+    @PermitAll
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscaProdutos(){
+
+        List<Produto> produtos = produtoService.getProdutos();
+        if(produtos.isEmpty())
+            throw new RuntimeException();
+        return Response.ok().entity(produtoService.getProdutos()).build();
     }
 
     @POST

@@ -6,7 +6,9 @@ import io.quarkus.test.security.TestSecurity;
 import org.acme.dto.Analise;
 import org.acme.dto.ResultadoSimulacao;
 import org.acme.dto.request.SimulacaoRequest;
+import org.acme.dto.response.ErroResponse;
 import org.acme.dto.response.SimulacaoResponse;
+import org.acme.model.Produto;
 import org.acme.model.Simulacao;
 import org.acme.service.ProdutoService;
 import org.acme.service.SimulacaoService;
@@ -37,7 +39,6 @@ class InvestimentoResourceTest {
     @Test
     void deveGerarSimulacaoComSucesso() {
 
-        // Arrange
         SimulacaoRequest request = new SimulacaoRequest(1, new BigDecimal("1000"), 12, "CDB");
 
         Analise analise = new Analise(null, new ResultadoSimulacao(BigDecimal.valueOf(1500), 12));
@@ -49,7 +50,6 @@ class InvestimentoResourceTest {
         Mockito.when(produtoService.getProdutoCompativel(Mockito.any(SimulacaoRequest.class)))
                 .thenReturn(responseMock);
 
-        // Act + Assert
         given()
                 .contentType("application/json")
                 .body(request)
@@ -63,13 +63,11 @@ class InvestimentoResourceTest {
     @Test
     void deveRetornar422QuandoNaoHouverProdutoCompativel() {
 
-        // Arrange
         SimulacaoRequest request = new SimulacaoRequest(1, new BigDecimal("1000"), 12, "CDB");
 
         Mockito.when(produtoService.getProdutoCompativel(Mockito.any(SimulacaoRequest.class)))
                 .thenReturn(null);
 
-        // Act + Assert
         given()
                 .contentType("application/json")
                 .body(request)
@@ -77,6 +75,28 @@ class InvestimentoResourceTest {
                 .post("/investimento/simulacoes")
                 .then()
                 .statusCode(422);
+    }
+
+    @Test
+    void deveRetornar400QuandoRequestInvalido() {
+
+        SimulacaoRequest request = new SimulacaoRequest(1, new BigDecimal("1000"), -12, "CDB");
+
+        Mockito.when(produtoService.getProdutoCompativel(Mockito.any(SimulacaoRequest.class)))
+                .thenReturn(null);
+
+        ErroResponse erroResponse = new ErroResponse(null,null,null);
+        erroResponse.setCodigo(400);
+        erroResponse.setMensagem("invalido");
+        erroResponse.setDadosComplementares(null);
+
+        given()
+                .contentType("application/json")
+                .body(request)
+                .when()
+                .post("/investimento/simulacoes")
+                .then()
+                .statusCode(400);
     }
 
     // =========================
@@ -87,7 +107,6 @@ class InvestimentoResourceTest {
     @TestSecurity(user = "testUser", roles = {"User","Admin"})
     void deveRetornarSimulacoesQuandoExistirem() {
 
-        // Arrange
         Simulacao simulacao = new Simulacao();
         simulacao.setDataSimulacao(Instant.now().toString());
         simulacao.setPrazoMeses(12);
@@ -99,7 +118,6 @@ class InvestimentoResourceTest {
         Mockito.when(simulacaoService.retornaSimulacaoPorClientId(1))
                 .thenReturn(List.of(simulacao));
 
-        // Act + Assert
         given()
                 .when()
                 .get("/investimento/simulacoes?clienteId=1")
@@ -111,15 +129,39 @@ class InvestimentoResourceTest {
     @TestSecurity(user = "testUser", roles = {"User","Admin"})
     void deveRetornar422QuandoNaoExistiremSimulacoes() {
 
-        // Arrange
         Mockito.when(simulacaoService.retornaSimulacaoPorClientId(1))
                 .thenReturn(List.of());
 
-        // Act + Assert
         given()
                 .when()
                 .get("/investimento/simulacoes?clienteId=1")
                 .then()
                 .statusCode(422);
+    }
+
+    @Test
+    void deveGerarRuntimeException() {
+
+        Mockito.when(produtoService.getProdutos())
+                .thenReturn(null);
+
+        given()
+                .when()
+                .get("/investimento/produtos")
+                .then()
+                .statusCode(500);
+    }
+
+    @Test
+    void deveRetornarOkParaBuscaProdutos() {
+
+        Mockito.when(produtoService.getProdutos())
+                .thenReturn(List.of(new Produto()));
+
+        given()
+                .when()
+                .get("/investimento/produtos")
+                .then()
+                .statusCode(200);
     }
 }

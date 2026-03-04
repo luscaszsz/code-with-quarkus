@@ -3,14 +3,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.gs</groupId>
-    <artifactId>quarkus-jwt-auth</artifactId>
+    <groupId>org.ls</groupId>
+    <artifactId>code-with-quarkus</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>investimento-jwt</artifactId>
   <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
   </properties>
   <dependencies>
     <dependency>
