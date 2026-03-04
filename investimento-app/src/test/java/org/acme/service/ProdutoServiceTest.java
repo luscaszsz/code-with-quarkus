@@ -79,9 +79,13 @@ class ProdutoServiceTest {
                 Produto.findByTipoAndValorAndPrazo(anyString(), any(), anyInt())
         ).thenReturn(List.of(produto));
 
-        SimulacaoRequest request = new SimulacaoRequest(1,BigDecimal.valueOf(1000), 12, "CDB");
+        SimulacaoRequest request = new SimulacaoRequest();
+        request.setPrazoMeses(12);
+        request.setClienteId(1);
+        request.setValor(BigDecimal.valueOf(1000));
+        request.setTipoProduto("CDB");
 
-        simulacaoMock.when(() -> Simulacao.insert(any()))
+        simulacaoMock.when((() -> Simulacao.insert(any())))
                 .thenAnswer(invocation -> null);
         SimulacaoResponse response = produtoService.getProdutoCompativel(request);
 

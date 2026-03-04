@@ -65,16 +65,15 @@ public class ProdutoService {
 
         for(Analise a : simulacaoResponse.getSimulacoes()){
 
-            Simulacao simulacaoInsert = Simulacao.builder()
-                    .clienteId(simulacaoRequest.getClienteId())
-                    .produtoNome(a.getProdutoValidado().getNome())
-                    .tipoProduto(a.getProdutoValidado().getTipoProduto())
-                    .valorInvestido(simulacaoRequest.getValor())
-                    .prazoMeses(a.getResultadoSimulacao().getPrazoMeses())
-                    .rentabilidadeAplicada(a.getProdutoValidado().getRentabilidadeAnual())
-                    .valorFinal(a.getResultadoSimulacao().getValorFinal())
-                    .dataSimulacao(simulacaoResponse.getDataSimulacao())
-                    .build();
+            Simulacao simulacaoInsert = new Simulacao();
+            simulacaoInsert.setClienteId(simulacaoRequest.getClienteId());
+            simulacaoInsert.setProdutoNome(a.getProdutoValidado().getNome());
+            simulacaoInsert.setTipoProduto(a.getProdutoValidado().getTipoProduto());
+            simulacaoInsert.setValorInvestido(simulacaoRequest.getValor());
+            simulacaoInsert.setPrazoMeses(a.getResultadoSimulacao().getPrazoMeses());
+            simulacaoInsert.setRentabilidadeAplicada(a.getProdutoValidado().getRentabilidadeAnual());
+            simulacaoInsert.setValorFinal(a.getResultadoSimulacao().getValorFinal());
+            simulacaoInsert.setDataSimulacao(simulacaoResponse.getDataSimulacao());
 
             Simulacao.insert(simulacaoInsert);
         }
